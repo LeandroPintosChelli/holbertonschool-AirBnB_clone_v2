@@ -21,7 +21,8 @@ def C_again(text):
     return 'C %s' % rep
 
 
-@app.route('/python/<text>', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
 def IsCool(text):
     rep = text.replace('_', ' ')
     return 'Python %s' % rep
