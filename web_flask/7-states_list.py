@@ -1,23 +1,20 @@
 #!/usr/bin/python3
 """Starts a Flask web application"""
-from models import storage
-from models.state import State
 from flask import Flask, render_template
 app = Flask(__name__)
 
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-    """Returns a rendered html template
-    at the /states_list route,
-    listing all states"""
-    return render_template('7-states_list.html',
-                           states=storage.all('State').values())
+    from models import storage
+    from models.state import State
+    sts = storage.all(State)
+    return render_template("7-states_list.html", sts=sts)
 
 
 @app.teardown_appcontext
 def teardown(self):
-    """Removes the current SQLAlchemy Session"""
+    from models import storage
     storage.close()
 
 if __name__ == "__main__":
