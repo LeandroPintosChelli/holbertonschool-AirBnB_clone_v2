@@ -13,8 +13,8 @@ def teardown(self):
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-    return render_template('7-states_list.html',
-                           states=storage.all('State').values())
+    store = storage.all(State)
+    return render_template("7-states_list.html", store=store)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
