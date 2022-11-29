@@ -28,7 +28,7 @@ def IsCool(text):
     return 'Python %s' % rep
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def isInt(n):
     if type(n) == int:
         return '%i is a number' % n
