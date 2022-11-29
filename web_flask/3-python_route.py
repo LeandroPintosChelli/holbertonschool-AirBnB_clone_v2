@@ -25,7 +25,7 @@ def C_again(text):
 @app.route('/python/<text>', strict_slashes=False)
 def IsCool(text):
     rep = text.replace('_', ' ')
-    return 'C %s' % rep
+    return 'Python %s' % rep
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
