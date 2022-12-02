@@ -2,18 +2,20 @@
 """This is the db storage class for AirBnB"""
 from sqlalchemy import create_engine
 from os import getenv
-from models.base_model import Base
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
+from models.base_model import Base
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class DBStorage:
+    """represents a database storage engine."""
     __engine = None
     __session = None
 
