@@ -69,3 +69,7 @@ class DBStorage:
                                        expire_on_commit=False)
         ses = scoped_session(session_factory)
         self.__session = ses()
+
+    def close(self):
+        """Close database connection"""
+        self.__session.close()
