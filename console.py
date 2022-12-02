@@ -116,30 +116,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        try:
-            args = shlex.split(args)
-            new_instance = eval(args[0])()
-            for i in args[1:]:
-                try:
-                    key = i.split("=")[0]
-                    value = i.split("=")[1]
-                    if hasattr(new_instance, key) is True:
-                        value = value.replace("_", " ")
-                        try:
-                            value = eval(value)
-                        except:
-                            pass
-                        setattr(new_instance, key, value)
-                except (ValueError, IndexError):
-                    pass
-            new_instance.save()
-            print(new_instance.id)
-        except:
-            print("** class doesn't exist **")
-            return
+        if not args:
+            raise SyntaxError("Error of syntax")
+        first_split = args.split(' ')
+        kwargs = {}
+        for i in range(1, len(first_split)):
+            key, value = tuple(first_split[i].split('='))
+            if value[0] == '"':
+                value = value.strip('"').replace('_', ' ')
+            kwargs[key] = value
+        if kwargs == {}:
+            new_instance = eval(first_split[0])()
+        else:
+            new_instance = eval(first_split[0])(**kwargs)
+        print(new_instance.id)
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -221,11 +212,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
